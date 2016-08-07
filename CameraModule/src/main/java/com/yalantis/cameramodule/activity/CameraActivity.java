@@ -41,7 +41,9 @@ import timber.log.Timber;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CameraActivity extends BaseActivity implements PhotoTakenCallback, PhotoSavedListener, RawPhotoTakenCallback,
         CameraParamsChangedListener {
@@ -56,7 +58,7 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
     private static final String TIME_FORMAT = "yyyyMMdd_HHmmss";
 
     private KeyEventsListener keyEventsListener;
-    private PhotoSavedListener photoSavedListener;
+    private static List<PhotoSavedListener> photoSavedListener = new ArrayList<PhotoSavedListener>();
 
     private String path;
     private boolean openPreview;
@@ -82,6 +84,10 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
         init();
     }
 
+    public static void addPhotoSavedListener(PhotoSavedListener l){
+        photoSavedListener.add(l);
+    }
+
     private void init() {
         CameraFragment fragment;
         int layoutId = getIntent().getIntExtra(LAYOUT_ID, -1);
@@ -92,7 +98,7 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
         }
         fragment.setParamsChangedListener(this);
         keyEventsListener = fragment;
-        photoSavedListener = fragment;
+        photoSavedListener.add(fragment);
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_content, fragment)
@@ -144,7 +150,8 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
             openPreview(path, name);
         }
         if (photoSavedListener != null) {
-            photoSavedListener.photoSaved(path, name);
+            for (PhotoSavedListener pl : photoSavedListener)
+                pl.photoSaved(path, name);
         }
     }
 
