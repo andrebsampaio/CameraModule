@@ -91,15 +91,21 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
     private CameraPreview cameraPreview;
     private ViewGroup previewContainer;
     private View mCapture;
+    private View mGallery;
     private ProgressBar progressBar;
     private ImageButton flashModeButton;
     private TextView mZoomRatioTextView;
     private HDRMode hdrMode;
     private boolean supportedHDR = false;
     private boolean supportedFlash = false;
+    private static View.OnClickListener onGalleryClick;
 
     private int cameraId;
     private int outputOrientation;
+
+    public static void setOnGalleryClick(View.OnClickListener l){
+        onGalleryClick = l;
+    }
 
     public static CameraFragment newInstance(int layoutId, PhotoTakenCallback callback, Bundle params) {
         CameraFragment fragment = new CameraFragment();
@@ -200,6 +206,11 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
             });
         }
 
+        mGallery = view.findViewById(R.id.open_gallery);
+        if (mGallery != null){
+            mGallery.setOnClickListener(onGalleryClick);
+        }
+
         flashModeButton = (ImageButton) view.findViewById(R.id.flash_mode);
         if (flashModeButton != null) {
             if (supportedFlash) {
@@ -219,10 +230,10 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
 
         setPreviewContainerSize(mScreenWidth, mScreenHeight, ratio);
 
-        mZoomRatioTextView = (TextView) view.findViewById(R.id.zoom_ratio);
+        /*mZoomRatioTextView = (TextView) view.findViewById(R.id.zoom_ratio);
         if (mZoomRatioTextView != null) {
             setZoomRatioText(zoomIndex);
-        }
+        }*/
 
         View cameraSettings = view.findViewById(R.id.camera_settings);
         if (cameraSettings != null) {

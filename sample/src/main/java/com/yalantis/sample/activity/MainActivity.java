@@ -25,11 +25,14 @@ package com.yalantis.sample.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Camera;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.yalantis.cameramodule.activity.CameraActivity;
+import com.yalantis.cameramodule.interfaces.PhotoSavedListener;
 import com.yalantis.sample.Const;
 import com.yalantis.sample.R;
 
@@ -39,6 +42,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        CameraActivity.setOnGalleryClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("I GOT CLICKED GOD DAMMIT!");
+            }
+        });
     }
 
     @Override
@@ -59,8 +68,7 @@ public class MainActivity extends Activity {
     public void openCamera(View view) {
         Intent intent = new Intent(this, CameraActivity.class);
         intent.putExtra(CameraActivity.PATH, Const.FOLDERS.PATH);
-        intent.putExtra(CameraActivity.OPEN_PHOTO_PREVIEW, true);
-        intent.putExtra(CameraActivity.LAYOUT_ID, R.layout.fragment_camera_custom);
+        intent.putExtra(CameraActivity.OPEN_PHOTO_PREVIEW, false);
         intent.putExtra(CameraActivity.USE_FRONT_CAMERA, false);
         startActivity(intent);
     }

@@ -29,6 +29,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 import com.yalantis.cameramodule.CameraConst;
 import com.yalantis.cameramodule.R;
@@ -59,6 +62,7 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
 
     private KeyEventsListener keyEventsListener;
     private static List<PhotoSavedListener> photoSavedListener = new ArrayList<PhotoSavedListener>();
+    private static View.OnClickListener onGalleryClick;
 
     private String path;
     private boolean openPreview;
@@ -69,7 +73,11 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideActionBar();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_with_fragment);
+
+
+
         if (TextUtils.isEmpty(path = getIntent().getStringExtra(PATH))) {
             path = Environment.getExternalStorageDirectory().getPath();
         }
@@ -88,6 +96,10 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
         photoSavedListener.add(l);
     }
 
+    public static void setOnGalleryClick(View.OnClickListener l){
+        onGalleryClick = l;
+    }
+
     private void init() {
         CameraFragment fragment;
         int layoutId = getIntent().getIntExtra(LAYOUT_ID, -1);
@@ -99,6 +111,7 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
         fragment.setParamsChangedListener(this);
         keyEventsListener = fragment;
         photoSavedListener.add(fragment);
+        CameraFragment.setOnGalleryClick(onGalleryClick);
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_content, fragment)
