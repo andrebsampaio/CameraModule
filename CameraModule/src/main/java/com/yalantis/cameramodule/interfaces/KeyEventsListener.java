@@ -31,6 +31,5 @@ public interface KeyEventsListener {
 
     public void takePhoto();
 
-    public void backButton();
 
 }
