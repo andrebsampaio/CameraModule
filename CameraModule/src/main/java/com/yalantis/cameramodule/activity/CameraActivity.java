@@ -247,6 +247,7 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
     public void onBackPressed() {
         if (!saving) {
             super.onBackPressed();
+            finish();
             System.exit(0);
         }
 
