@@ -64,6 +64,7 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
     public static final String FLASH_MODE = "flash_mode";
     public static final String HDR_MODE = "hdr_mode";
     public static final String FRONT_CAMERA = "front_camera";
+    public static final String UPLOAD = "uplaod";
     private PhotoTakenCallback callback;
     private RawPhotoTakenCallback rawCallback;
     private CameraParamsChangedListener paramsChangedListener;
@@ -99,12 +100,19 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
     private boolean supportedHDR = false;
     private boolean supportedFlash = false;
     private static View.OnClickListener onGalleryClick;
+    private static View.OnClickListener onUploadStatusClick;
 
     private int cameraId;
     private int outputOrientation;
+    private View mUploadStatus;
+    private boolean uploadHidden = true;
+
 
     public static void setOnGalleryClick(View.OnClickListener l){
         onGalleryClick = l;
+    }
+    public static void setOnUploadStatusClick(View.OnClickListener l){
+        onUploadStatusClick = l;
     }
 
     public static CameraFragment newInstance(int layoutId, PhotoTakenCallback callback, Bundle params) {
@@ -209,6 +217,14 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
         mGallery = view.findViewById(R.id.open_gallery);
         if (mGallery != null){
             mGallery.setOnClickListener(onGalleryClick);
+        }
+
+        if (!uploadHidden){
+            mUploadStatus = view.findViewById(R.id.uploadButton);
+            mUploadStatus.setVisibility(View.VISIBLE);
+            if (mUploadStatus != null){
+                mUploadStatus.setOnClickListener(onUploadStatusClick);
+            }
         }
 
         flashModeButton = (ImageButton) view.findViewById(R.id.flash_mode);

@@ -55,14 +55,18 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
     public static final String USE_FRONT_CAMERA = "use_front_camera";
     public static final String OPEN_PHOTO_PREVIEW = "open_photo_preview";
     public static final String LAYOUT_ID = "layout_id";
+    private static final String UPLOAD = "use_upload";
 
     private static final String IMG_PREFIX = "IMG_";
     private static final String IMG_POSTFIX = ".jpg";
     private static final String TIME_FORMAT = "yyyyMMdd_HHmmss";
 
+
     private KeyEventsListener keyEventsListener;
     private static List<PhotoSavedListener> photoSavedListener = new ArrayList<PhotoSavedListener>();
     private static View.OnClickListener onGalleryClick;
+    private static View.OnClickListener onAutoUploadClick;
+    private boolean uploadHidden = true;
 
     private String path;
     private boolean openPreview;
@@ -81,6 +85,9 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
         if (TextUtils.isEmpty(path = getIntent().getStringExtra(PATH))) {
             path = Environment.getExternalStorageDirectory().getPath();
         }
+
+        uploadHidden = getIntent().getBooleanExtra(UPLOAD,true);
+
         openPreview = getIntent().getBooleanExtra(OPEN_PHOTO_PREVIEW, SharedPrefManager.i.isOpenPhotoPreview());
         if (openPreview != SharedPrefManager.i.isOpenPhotoPreview()) {
             SharedPrefManager.i.setOpenPhotoPreview(openPreview);
@@ -98,6 +105,10 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
 
     public static void setOnGalleryClick(View.OnClickListener l){
         onGalleryClick = l;
+    }
+
+    public static void setOnAutoUploadClick(View.OnClickListener l){
+        onAutoUploadClick = l;
     }
 
     private void init() {
@@ -127,6 +138,7 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
         bundle.putInt(CameraFragment.QUALITY, SharedPrefManager.i.getCameraQuality());
         bundle.putInt(CameraFragment.FOCUS_MODE, SharedPrefManager.i.getCameraFocusMode());
         bundle.putBoolean(CameraFragment.FRONT_CAMERA, SharedPrefManager.i.useFrontCamera());
+        bundle.putBoolean(CameraFragment.UPLOAD,uploadHidden);
 
         return bundle;
     }
