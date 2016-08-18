@@ -64,7 +64,7 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
     public static final String FLASH_MODE = "flash_mode";
     public static final String HDR_MODE = "hdr_mode";
     public static final String FRONT_CAMERA = "front_camera";
-    public static final String UPLOAD = "uplaod";
+    public static final String UPLOAD = "upload";
     private PhotoTakenCallback callback;
     private RawPhotoTakenCallback rawCallback;
     private CameraParamsChangedListener paramsChangedListener;
@@ -106,7 +106,7 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
     private int outputOrientation;
     private View mUploadStatus;
     private boolean uploadHidden = true;
-    private boolean safeToTakePicture = false;
+    private boolean safeToTakePicture = true;
 
 
     public static void setOnGalleryClick(View.OnClickListener l){
@@ -212,6 +212,7 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
                 public void onClick(View v) {
                     if (safeToTakePicture){
                         takePhoto();
+                        safeToTakePicture = false;
                     } else {
 
                     }
