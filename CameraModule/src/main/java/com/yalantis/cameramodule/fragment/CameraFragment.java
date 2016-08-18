@@ -137,6 +137,7 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boolean useFrontCamera = getArguments().getBoolean(FRONT_CAMERA, false);
+        uploadHidden = getArguments().getBoolean(UPLOAD);
         camera = getCameraInstance(useFrontCamera);
         if (camera == null) {
             return;

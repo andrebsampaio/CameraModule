@@ -81,7 +81,6 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_with_fragment);
 
-        
         if (TextUtils.isEmpty(path = getIntent().getStringExtra(PATH))) {
             path = Environment.getExternalStorageDirectory().getPath();
         }
