@@ -106,6 +106,7 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
     private int outputOrientation;
     private View mUploadStatus;
     private boolean uploadHidden = true;
+    private boolean safeToTakePicture = false;
 
 
     public static void setOnGalleryClick(View.OnClickListener l){
@@ -209,7 +210,12 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
 
                 @Override
                 public void onClick(View v) {
-                    takePhoto();
+                    if (safeToTakePicture){
+                        takePhoto();
+                    } else {
+
+                    }
+
                 }
 
             });
@@ -377,6 +383,7 @@ public class CameraFragment extends com.yalantis.cameramodule.fragment.BaseFragm
                 callback.photoTaken(data.clone(), outputOrientation);
             }
             camera.startPreview();
+            safeToTakePicture = true;
             cameraPreview.onPictureTaken();
         }
 
