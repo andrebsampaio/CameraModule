@@ -55,7 +55,7 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
     public static final String USE_FRONT_CAMERA = "use_front_camera";
     public static final String OPEN_PHOTO_PREVIEW = "open_photo_preview";
     public static final String LAYOUT_ID = "layout_id";
-    private static final String UPLOAD = "use_upload";
+    public static final String UPLOAD = "use_upload";
 
     private static final String IMG_PREFIX = "IMG_";
     private static final String IMG_POSTFIX = ".jpg";
@@ -81,8 +81,7 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_with_fragment);
 
-
-
+        
         if (TextUtils.isEmpty(path = getIntent().getStringExtra(PATH))) {
             path = Environment.getExternalStorageDirectory().getPath();
         }
