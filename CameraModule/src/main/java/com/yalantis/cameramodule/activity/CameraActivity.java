@@ -67,7 +67,7 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
     private static View.OnClickListener onGalleryClick;
     private static View.OnClickListener onAutoUploadClick;
     private boolean uploadHidden = true;
-    private static boolean autoUploadStatus = true;
+    public static boolean autoUploadStatus = true;
 
     private String path;
     private boolean openPreview;
