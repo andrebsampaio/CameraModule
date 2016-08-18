@@ -122,6 +122,7 @@ public class CameraActivity extends BaseActivity implements PhotoTakenCallback, 
         keyEventsListener = fragment;
         photoSavedListener.add(fragment);
         CameraFragment.setOnGalleryClick(onGalleryClick);
+        CameraFragment.setOnUploadStatusClick(onAutoUploadClick);
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_content, fragment)

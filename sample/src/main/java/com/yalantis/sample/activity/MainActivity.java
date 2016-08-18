@@ -42,10 +42,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        CameraActivity.setOnGalleryClick(new View.OnClickListener() {
+        CameraActivity.setOnAutoUploadClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("I GOT CLICKED GOD DAMMIT!");
+                System.out.println("I GOT CLICKED");
             }
         });
     }
@@ -70,6 +70,7 @@ public class MainActivity extends Activity {
         intent.putExtra(CameraActivity.PATH, Const.FOLDERS.PATH);
         intent.putExtra(CameraActivity.OPEN_PHOTO_PREVIEW, false);
         intent.putExtra(CameraActivity.USE_FRONT_CAMERA, false);
+        intent.putExtra(CameraActivity.UPLOAD,false);
         startActivity(intent);
     }
 
